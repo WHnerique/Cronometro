@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script> 
+
+let tempoRef = Date.now()
+let cronometrar = false
+let acumulado = 0
+
+function iniciar() {
+    cronometrar=true
+}
+
+function pausar() {
+    cronometrar=false
+}
+function reiniciar() {
+    acumulado = 0
+}
+    setInterval(() => {
+let tempo = document.getElementById("tempo")
+if (cronometrar) {
+acumulado += Date.now() - tempoRef
+
+}
+
+tempoRef = Date.now()
+tempo.innerHTML = formatearMS(acumulado)
+    }, 1000/60);
+
+    function formatearMS(tempo_ms) {
+        let MS = tempo_ms % 1000
+        let S = Math.floor(((tempo_ms - MS)  /1000) % 60)
+        let M = Math.floor((S / 60) % 60)
+        let H = Math.floor((M / 60))
+        Number.prototype.ceros = function(n) {
+            return (this+"").padStart(n,0)
+        }
+        return H.ceros(2)+":"+M.ceros(2)+":"+S.ceros(2)+":"+MS.ceros(3)
+
+
+    }
+
+    </script>
+
+    <style>
+* {
+    transition: all 0.3s;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 300%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+background:  linear-gradient(white,rgb(11, 74, 81));
+}
+
+.marco {
+    border-radius: 30px;
+    background-color: #333;
+    padding: 15px;
+    color: white;
+}
+
+.Botoes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn{
+    display: inline-block;
+ cursor: pointer;
+    font-size: 60px;
+    padding: 20px;
+}
+    </style>
+</head>
+<body>
+    <div class="marco"> 
+    
+    <div class="tempo" id="tempo">
+        00:00:00.000
+    </div>
+
+    <div class="Botoes">
+    <div class="btn">
+        <i class="fa-solid fa-play" onclick="iniciar()"></i>
+    </div>
+
+    <div class="btn">
+        <i class="fa-solid fa-pause" onclick="pausar()"></i>
+
+    </div>
+
+    <div class="btn">
+        <i class="fa-solid fa-rotate-right"onclick="reiniciar()"></i>
+         </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
